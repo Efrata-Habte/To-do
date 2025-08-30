@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Advanced Todo List</title>
+  <link rel="stylesheet" href="Style/style.css">
+</head>
+<body>
+  <div class="app">
+    <!-- Sidebar Projects -->
+    <aside class="sidebar">
+      <h2>Projects</h2>
+      <ul class="project-list">
+        <li class="project active">Default Project</li>
+        <li class="project">Work</li>
+        <li class="project">Personal</li>
+      </ul>
+      <button class="add-project">+ Add Project</button>
+    </aside>
+
+    <!-- Main Todos Section -->
+    <main class="main">
+      <header class="main-header">
+        <h2>Todos</h2>
+        <button class="add-todo">+ Add Todo</button>
+      </header>
+
+      <!-- Todo List -->
+      <ul class="todo-list">
+        <li class="todo high">
+          <div>
+            <span class="title">Finish Bootcamp Project</span>
+            <span class="due-date">Due: 2025-09-05</span>
+          </div>
+          <button class="delete">✖</button>
+        </li>
+
+        <li class="todo medium">
+          <div>
+            <span class="title">Buy groceries</span>
+            <span class="due-date">Due: 2025-09-02</span>
+          </div>
+          <button class="delete">✖</button>
+        </li>
+
+        <li class="todo low">
+          <div>
+            <span class="title">Read a book</span>
+            <span class="due-date">No deadline</span>
+          </div>
+          <button class="delete">✖</button>
+        </li>
+      </ul>
+    </main>
+  </div>
+</body>
+</html>
