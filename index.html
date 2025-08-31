@@ -35,6 +35,22 @@
         <button class="add-todo">+ Add Todo</button>
       </header>
 
+        <!-- Hidden Todo Form -->
+      <div class="todo-form hidden" id="todo-form">
+        <input type="text" id="todo-title" placeholder="Title">
+        <textarea id="todo-desc" placeholder="Description"></textarea>
+        <input type="date" id="todo-date">
+        <select id="todo-priority">
+          <option value="high">High Priority</option>
+          <option value="medium">Medium Priority</option>
+          <option value="low">Low Priority</option>
+        </select>
+        <div class="form-buttons">
+          <button id="add-todo-btn">Add</button>
+          <button id="cancel-todo-btn" class="cancel">Cancel</button>
+        </div>
+      </div>
+
       <!-- Todo List -->
       <ul class="todo-list">
         <li class="todo high">
