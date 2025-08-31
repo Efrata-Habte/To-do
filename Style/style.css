@@ -10,6 +10,7 @@ body {
   color: #333;
   min-height: 100vh;
   display: flex;
+  position: relative;
 }
 
 /* Layout */
@@ -51,6 +52,54 @@ body {
 }
 .add-project:hover {
   background: #0056b3;
+}
+
+/* Project Form */
+.project-form {
+  margin-top: 1rem;
+  background: #333;
+  padding: 0.75rem;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.project-form input {
+  padding: 0.5rem;
+  border: none;
+  border-radius: 5px;
+  outline: none;
+}
+.form-buttons {
+  display: flex;
+  gap: 0.5rem;
+}
+#add-project-btn,
+#cancel-project-btn {
+  flex: 1;
+  padding: 0.4rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+#add-project-btn {
+  background: #28a745;
+  color: white;
+}
+#add-project-btn:hover {
+  background: #1e7e34;
+}
+#cancel-project-btn {
+  background: #dc3545;
+  color: white;
+}
+#cancel-project-btn:hover {
+  background: #b21f2d;
+}
+
+/* Hidden by default */
+.hidden {
+  display: none;
 }
 
 /* Main Section */
