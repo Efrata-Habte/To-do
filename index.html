@@ -12,7 +12,10 @@
     <aside class="sidebar">
       <h2>Projects</h2>
       <ul class="project-list">
-        <li class="project active">Default Project</li>
+        <li class="project active">
+          Default Project
+          <button class="delete">✖</button>
+        </li>
         <li class="project">Work</li>
         <li class="project">Personal</li>
       </ul>
@@ -41,9 +44,9 @@
         <textarea id="todo-desc" placeholder="Description"></textarea>
         <input type="date" id="todo-date">
         <select id="todo-priority">
-          <option value="high">High Priority</option>
-          <option value="medium">Medium Priority</option>
-          <option value="low">Low Priority</option>
+          <option value="high">High-Priority</option>
+          <option value="medium">Medium-Priority</option>
+          <option value="low">Low-Priority</option>
         </select>
         <div class="form-buttons">
           <button id="add-todo-btn">Add</button>
@@ -53,15 +56,16 @@
 
       <!-- Todo List -->
       <ul class="todo-list">
-        <li class="todo high">
+        <li class="todo high-priority">
           <div>
             <span class="title">Finish Bootcamp Project</span>
             <span class="due-date">Due: 2025-09-05</span>
           </div>
+          <button class="edit">✏️</button>
           <button class="delete">✖</button>
         </li>
 
-        <li class="todo medium">
+        <li class="todo medium-priority">
           <div>
             <span class="title">Buy groceries</span>
             <span class="due-date">Due: 2025-09-02</span>
@@ -69,7 +73,7 @@
           <button class="delete">✖</button>
         </li>
 
-        <li class="todo low">
+        <li class="todo low-priority">
           <div>
             <span class="title">Read a book</span>
             <span class="due-date">No deadline</span>

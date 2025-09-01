@@ -199,11 +199,18 @@ body {
   font-size: 1rem;
   cursor: pointer;
 }
+.edit{
+  background: none;
+  border: none;
+  font-size: 1rem;
+  margin-right: 0.5rem;
+  cursor: pointer;
+}
 
 /* Priority Colors */
-.todo.high { border-color: red; }
-.todo.medium { border-color: orange; }
-.todo.low { border-color: green; }
+.todo.high-priority { border-color: red; }
+.todo.medium-priority { border-color: orange; }
+.todo.low-priority { border-color: green; }
 
 /* Hidden by default */
 .hidden {
