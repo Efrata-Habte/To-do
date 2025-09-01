@@ -97,11 +97,6 @@ body {
   background: #b21f2d;
 }
 
-/* Hidden by default */
-.hidden {
-  display: none;
-}
-
 /* Main Section */
 .main {
   flex: 1;
@@ -209,6 +204,11 @@ body {
 .todo.high { border-color: red; }
 .todo.medium { border-color: orange; }
 .todo.low { border-color: green; }
+
+/* Hidden by default */
+.hidden {
+  display: none;
+}
 
 /* Responsive */
 @media (max-width: 768px) {
