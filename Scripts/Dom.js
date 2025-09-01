@@ -9,178 +9,181 @@ const todoForm = document.querySelector('.todo-form');
 const todoList = document.querySelector('.todo-list');
 const projectList = document.querySelector('.project-list');
 
+// ===== Data =====
+let projects = {
+    "Default Project": []
+};
+let activeProject = "Default Project";
+
 // ===== Show/Hide Forms =====
-function showProjectForm() {
-  projectForm.classList.remove('hidden');
+function showProjectForm() { projectForm.classList.remove('hidden'); }
+function hideProjectForm() { projectForm.classList.add('hidden'); }
+function showTodoForm() { todoForm.classList.remove('hidden'); }
+function hideTodoForm() { todoForm.classList.add('hidden'); }
+
+// ===== Render Projects =====
+function renderProjects() {
+    projectList.innerHTML = '';
+    for (let project in projects) {
+        const li = document.createElement('li');
+        li.classList.add('project');
+        if (project === activeProject) li.classList.add('active');
+
+        li.innerHTML = `
+            <span class="project-name">${project}</span>
+            <div class="project-buttons">
+                <button class="edit-project">✏️</button>
+                <button class="delete-project">✖</button>
+            </div>
+        `;
+        projectList.appendChild(li);
+    }
+    renderTodos();
 }
 
-function hideProjectForm() {
-  projectForm.classList.add('hidden');
-}
-
-function showTodoForm() {
-  todoForm.classList.remove('hidden');
-}
-
-function hideTodoForm() {
-  todoForm.classList.add('hidden');
+// ===== Render Todos =====
+function renderTodos() {
+    todoList.innerHTML = '';
+    projects[activeProject].forEach(todo => {
+        const li = document.createElement('li');
+        li.classList.add('todo', `${todo.priority}-priority`);
+        li.innerHTML = `
+            <div class="todo-content">
+                <span class="title">${todo.title}</span>
+                <span class="due-date">${todo.dueDate ? `Due: ${todo.dueDate}` : 'No deadline'}</span>
+                <span class="description hidden">${todo.description}</span>
+            </div>
+            <div class="todo-buttons">
+                <button class="edit">✏️</button>
+                <button class="delete">✖</button>
+            </div>
+        `;
+        todoList.appendChild(li);
+    });
 }
 
 // ===== Add Project =====
 function addProjectToList() {
-  const projectNameValue = document.querySelector('#project-name').value.trim();
+    const projectNameValue = document.querySelector('#project-name').value.trim();
+    if (!projectNameValue) { alert('Project name cannot be empty.'); return; }
+    if (projects[projectNameValue]) { alert('Project already exists.'); return; }
 
-  if (!projectNameValue) {
-    alert('Project name cannot be empty.');
-    return;
-  }
-
-  const li = document.createElement('li');
-  li.classList.add('project');
-  li.innerHTML = `
-    <span class="project-name">${projectNameValue}</span>
-    <div class="project-buttons">
-      <button class="edit-project">✏️</button>
-      <button class="delete-project">✖</button>
-    </div>
-  `;
-
-  projectList.appendChild(li);
-  document.querySelector('#project-name').value = '';
+    projects[projectNameValue] = [];
+    activeProject = projectNameValue;
+    renderProjects();
+    document.querySelector('#project-name').value = '';
 }
 
 // ===== Add Todo =====
 function addTodoToList() {
-  const todoTitleValue = document.querySelector('#todo-title').value.trim();
-  const todoDescValue = document.querySelector('#todo-desc').value.trim();
-  const todoDateValue = document.querySelector('#todo-date').value;
-  const todoPriorityValue = document.querySelector('#todo-priority').value;
+    const title = document.querySelector('#todo-title').value.trim();
+    const desc = document.querySelector('#todo-desc').value.trim();
+    const dueDate = document.querySelector('#todo-date').value;
+    const priority = document.querySelector('#todo-priority').value;
 
-  if (!todoTitleValue) {
-    alert('Todo title cannot be empty.');
-    return;
-  }
+    if (!title) { alert('Todo title cannot be empty.'); return; }
 
-  const li = document.createElement('li');
-  li.classList.add('todo', `${todoPriorityValue}-priority`);
-  li.innerHTML = `
-    <div class="todo-content">
-      <span class="title">${todoTitleValue}</span>
-      <span class="due-date">${todoDateValue ? `Due: ${todoDateValue}` : 'No deadline'}</span>
-      <span class="description">${todoDescValue}</span>
-    </div>
-    <div class="todo-buttons">
-      <button class="edit">✏️</button>
-      <button class="delete">✖</button>
-    </div>
-  `;
+    const todo = { title, description: desc, dueDate, priority };
+    projects[activeProject].push(todo);
+    renderTodos();
 
-  todoList.appendChild(li);
-
-  document.querySelector('#todo-title').value = '';
-  document.querySelector('#todo-desc').value = '';
-  document.querySelector('#todo-date').value = '';
-  document.querySelector('#todo-priority').value = 'high';
+    document.querySelector('#todo-title').value = '';
+    document.querySelector('#todo-desc').value = '';
+    document.querySelector('#todo-date').value = '';
+    document.querySelector('#todo-priority').value = 'high';
 }
 
 // ===== Event Listeners =====
 addProject.addEventListener('click', showProjectForm);
-
 addProjectBtn.addEventListener('click', (e) => {
-  e.preventDefault();
-  addProjectToList();
-  hideProjectForm();
+    e.preventDefault();
+    addProjectToList();
+    hideProjectForm();
 });
-
 cancelProjectBtn.addEventListener('click', (e) => {
-  e.preventDefault();
-  document.querySelector('#project-name').value = '';
-  hideProjectForm();
+    e.preventDefault();
+    document.querySelector('#project-name').value = '';
+    hideProjectForm();
 });
 
 addTodo.addEventListener('click', showTodoForm);
-
 cancelTodoBtn.addEventListener('click', hideTodoForm);
-
 addTodoBtn.addEventListener('click', (e) => {
-  e.preventDefault();
-  addTodoToList();
-  hideTodoForm();
+    e.preventDefault();
+    addTodoToList();
+    hideTodoForm();
 });
 
 // ===== Project List Delegation =====
 projectList.addEventListener('click', (e) => {
-  const target = e.target;
-  const projectItem = target.closest('li.project');
-  if (!projectItem) return;
+    const target = e.target;
+    const li = target.closest('li.project');
+    if (!li) return;
 
-  // Delete project
-  if (target.classList.contains('delete-project')) {
-    if (confirm('Are you sure you want to delete this project?')) {
-      projectItem.remove();
+    const projectName = li.querySelector('.project-name').textContent;
+
+    // Click project name -> make active
+    if (target.classList.contains('project-name')) {
+        activeProject = projectName;
+        renderProjects();
     }
-    return;
-  }
 
-  // Edit project
-  if (target.classList.contains('edit-project')) {
-    const projectNameSpan = projectItem.querySelector('.project-name');
-    const newName = prompt('Edit Project Name:', projectNameSpan.textContent);
-    if (newName !== null && newName.trim() !== '') {
-      projectNameSpan.textContent = newName.trim();
+    // Delete Project
+    if (target.classList.contains('delete-project')) {
+        if (confirm('Are you sure you want to delete this project?')) {
+            delete projects[projectName];
+            activeProject = Object.keys(projects)[0] || "Default Project";
+            renderProjects();
+        }
     }
-    return;
-  }
 
-  // Make project active
-  document.querySelectorAll('.project').forEach(p => p.classList.remove('active'));
-  projectItem.classList.add('active');
+    // Edit Project
+    if (target.classList.contains('edit-project')) {
+        const newName = prompt('Edit Project Name:', projectName);
+        if (newName && newName.trim() !== '') {
+            projects[newName.trim()] = projects[projectName];
+            delete projects[projectName];
+            activeProject = newName.trim();
+            renderProjects();
+        }
+    }
 });
 
 // ===== Todo List Delegation =====
 todoList.addEventListener('click', (e) => {
-  const target = e.target;
-  const todoItem = target.closest('li.todo');
-  if (!todoItem) return;
+    const target = e.target;
+    const li = target.closest('li.todo');
+    if (!li) return;
 
-  // Delete todo
-  if (target.classList.contains('delete')) {
-    if (confirm('Are you sure you want to delete this todo?')) {
-      todoItem.remove();
+    // Show/hide description when todo clicked
+    if (target.classList.contains('title') || target.classList.contains('due-date')) {
+        const desc = li.querySelector('.description');
+        desc.classList.toggle('show');
     }
-    return;
-  }
 
-  // Edit todo
-  if (target.classList.contains('edit')) {
-    const titleSpan = todoItem.querySelector('.title');
-    const descSpan = todoItem.querySelector('.description');
-    const dateSpan = todoItem.querySelector('.due-date');
-
-    const currentTitle = titleSpan.textContent;
-    const currentDesc = descSpan.textContent;
-    const currentDate = dateSpan.textContent.replace('Due: ', '');
-
-    const newTitle = prompt('Edit Todo Title:', currentTitle);
-    const newDesc = prompt('Edit Todo Description:', currentDesc);
-    const newDate = prompt('Edit Due Date (YYYY-MM-DD):', currentDate === 'No deadline' ? '' : currentDate);
-
-    if (newTitle !== null && newTitle.trim() !== '') {
-      titleSpan.textContent = newTitle.trim();
+    // Delete todo
+    if (target.classList.contains('delete')) {
+        const index = Array.from(todoList.children).indexOf(li);
+        projects[activeProject].splice(index, 1);
+        renderTodos();
     }
-    if (newDesc !== null) {
-      descSpan.textContent = newDesc.trim();
-    }
-    if (newDate !== null) {
-      dateSpan.textContent = newDate.trim() ? `Due: ${newDate.trim()}` : 'No deadline';
-    }
-    return;
-  }
 
-  // Toggle todo description
-  if (target.classList.contains('todo-content') || target.closest('.todo-content')) {
-    const contentDiv = target.closest('.todo-content');
-    const desc = contentDiv.querySelector('.description');
-    desc.classList.toggle('show');
-  }
+    // Edit todo
+    if (target.classList.contains('edit')) {
+        const index = Array.from(todoList.children).indexOf(li);
+        const todo = projects[activeProject][index];
+
+        const newTitle = prompt('Edit Todo Title:', todo.title);
+        const newDesc = prompt('Edit Todo Description:', todo.description);
+        const newDate = prompt('Edit Due Date (YYYY-MM-DD):', todo.dueDate);
+
+        if (newTitle && newTitle.trim() !== '') todo.title = newTitle.trim();
+        if (newDesc !== null) todo.description = newDesc.trim();
+        if (newDate !== null) todo.dueDate = newDate.trim();
+
+        renderTodos();
+    }
 });
+
+// ===== Initial Render =====
+renderProjects();
