@@ -228,6 +228,11 @@ body {
 .todo .description.show {
   display: block;
 }
+.todo:hover {
+  background: #f5f1f1;
+  scale: 1.01;
+  cursor: pointer;
+}
 .todo-buttons button {
   margin-left: 0.3rem;
   background: none;
