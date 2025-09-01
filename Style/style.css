@@ -37,7 +37,34 @@ body {
   padding: 0.5rem;
   cursor: pointer;
   border-radius: 5px;
+  display: flex;
+  justify-content: space-between; /* Space between project name and buttons */
+  align-items: center;
 }
+
+/* Project name */
+.project .project-name {
+  flex: 1; /* Take remaining space */
+}
+
+/* Buttons wrapper */
+.project-buttons {
+  display: flex;
+  gap: 0.3rem;
+}
+
+/* Individual buttons */
+.edit-project,
+.delete-project {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #ddd;
+  font-size: 0.9rem;
+}
+.edit-project:hover { color: #ffc107; }
+.delete-project:hover { color: red; }
+
 .project:hover, .project.active {
   background: #444;
 }
@@ -192,20 +219,26 @@ body {
   font-size: 0.85rem;
   color: #555;
 }
-.delete {
+.todo .description {
+  font-size: 0.85rem;
+  color: #555;
+  display: none;
+  margin-top: 0.3rem;
+}
+.todo .description.show {
+  display: block;
+}
+.todo-buttons button {
+  margin-left: 0.3rem;
   background: none;
   border: none;
-  color: red;
-  font-size: 1rem;
   cursor: pointer;
-}
-.edit{
-  background: none;
-  border: none;
   font-size: 1rem;
-  margin-right: 0.5rem;
-  cursor: pointer;
 }
+.todo-buttons button:hover {
+  transform: scale(1.1);
+}
+.delete:hover { color: red; }
 
 /* Priority Colors */
 .todo.high-priority { border-color: red; }

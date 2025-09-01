@@ -13,13 +13,29 @@
       <h2>Projects</h2>
       <ul class="project-list">
         <li class="project active">
-          Default Project
-          <button class="delete">✖</button>
+          <span class="project-name">Default</span>
+          <div class="project-buttons">
+            <button class="edit-project">✏️</button>
+            <button class="delete-project">✖</button>
+          </div>
         </li>
-        <li class="project">Work</li>
-        <li class="project">Personal</li>
+        <li class="project">
+          <span class="project-name">Work</span>
+          <div class="project-buttons">
+            <button class="edit-project">✏️</button>
+            <button class="delete-project">✖</button>
+          </div>
+        </li>
+        <li class="project">
+          <span class="project-name">Personal</span>
+          <div class="project-buttons">
+            <button class="edit-project">✏️</button>
+            <button class="delete-project">✖</button>
+          </div>
+        </li>
       </ul>
 
+      <!-- Add Project Form -->
       <div class="project-form hidden" id="project-form">
         <input type="text" placeholder="Project Name" id="project-name">
         <div class="form-buttons">
@@ -38,7 +54,7 @@
         <button class="add-todo">+ Add Todo</button>
       </header>
 
-      <!-- Hidden Todo Form -->
+      <!-- Todo Form -->
       <div class="todo-form hidden" id="todo-form">
         <input type="text" id="todo-title" placeholder="Title">
         <textarea id="todo-desc" placeholder="Description"></textarea>
@@ -57,28 +73,39 @@
       <!-- Todo List -->
       <ul class="todo-list">
         <li class="todo high-priority">
-          <div>
+          <div class="todo-content">
             <span class="title">Finish Bootcamp Project</span>
             <span class="due-date">Due: 2025-09-05</span>
+            <span class="description hidden">Complete the advanced todo list project with Webpack and localStorage.</span>
           </div>
-          <button class="edit">✏️</button>
-          <button class="delete">✖</button>
+          <div class="todo-buttons">
+            <button class="edit">✏️</button>
+            <button class="delete">✖</button>
+          </div>
         </li>
 
         <li class="todo medium-priority">
-          <div>
+          <div class="todo-content">
             <span class="title">Buy groceries</span>
             <span class="due-date">Due: 2025-09-02</span>
+            <span class="description hidden">Milk, eggs, bread, and fruits.</span>
           </div>
-          <button class="delete">✖</button>
+          <div class="todo-buttons">
+            <button class="edit">✏️</button>
+            <button class="delete">✖</button>
+          </div>
         </li>
 
         <li class="todo low-priority">
-          <div>
+          <div class="todo-content">
             <span class="title">Read a book</span>
             <span class="due-date">No deadline</span>
+            <span class="description hidden">Finish reading "Atomic Habits".</span>
           </div>
-          <button class="delete">✖</button>
+          <div class="todo-buttons">
+            <button class="edit">✏️</button>
+            <button class="delete">✖</button>
+          </div>
         </li>
       </ul>
     </main>
