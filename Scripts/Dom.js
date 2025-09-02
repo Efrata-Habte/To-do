@@ -1,3 +1,5 @@
+import { saveProjects,loadProjects } from "./storage.js";  
+
 const addProject = document.querySelector('.add-project'); 
 const addTodo = document.querySelector('.add-todo');
 const addProjectBtn = document.querySelector('#add-project-btn');
@@ -9,11 +11,15 @@ const todoForm = document.querySelector('.todo-form');
 const todoList = document.querySelector('.todo-list');
 const projectList = document.querySelector('.project-list');
 
+console.log("Script loaded ✅");
+console.log(addProject, addTodo, addProjectBtn, cancelProjectBtn);
+
 // ===== Data =====
-let projects = {
-    "Default Project": []
-};
-let activeProject = "Default Project";
+let projects = loadProjects();
+if(Object.keys(projects).length===0){
+    projects["Default Projects"]=[];
+}
+let activeProject =Object.keys(projects)[0] || "Default Project";
 
 // ===== Show/Hide Forms =====
 function showProjectForm() { projectForm.classList.remove('hidden'); }
@@ -38,11 +44,16 @@ function renderProjects() {
         `;
         projectList.appendChild(li);
     }
+    saveProjects(projects); 
     renderTodos();
 }
 
 // ===== Render Todos =====
 function renderTodos() {
+    if (!projects[activeProject]) {
+        projects[activeProject] = [];
+    }
+
     todoList.innerHTML = '';
     projects[activeProject].forEach(todo => {
         const li = document.createElement('li');
@@ -70,6 +81,7 @@ function addProjectToList() {
 
     projects[projectNameValue] = [];
     activeProject = projectNameValue;
+    saveProjects(projects);
     renderProjects();
     document.querySelector('#project-name').value = '';
 }
@@ -85,12 +97,13 @@ function addTodoToList() {
 
     const todo = { title, description: desc, dueDate, priority };
     projects[activeProject].push(todo);
+    saveProjects(projects);
     renderTodos();
 
     document.querySelector('#todo-title').value = '';
     document.querySelector('#todo-desc').value = '';
     document.querySelector('#todo-date').value = '';
-    document.querySelector('#todo-priority').value = 'high';
+    document.querySelector('#todo-priority').selectedIndex=0;
 }
 
 // ===== Event Listeners =====
@@ -133,6 +146,7 @@ projectList.addEventListener('click', (e) => {
         if (confirm('Are you sure you want to delete this project?')) {
             delete projects[projectName];
             activeProject = Object.keys(projects)[0] || "Default Project";
+            saveProjects(projects);
             renderProjects();
         }
     }
@@ -144,6 +158,7 @@ projectList.addEventListener('click', (e) => {
             projects[newName.trim()] = projects[projectName];
             delete projects[projectName];
             activeProject = newName.trim();
+            saveProjects(projects);
             renderProjects();
         }
     }
@@ -165,6 +180,7 @@ todoList.addEventListener('click', (e) => {
     if (target.classList.contains('delete')) {
         const index = Array.from(todoList.children).indexOf(li);
         projects[activeProject].splice(index, 1);
+        saveProjects(projects);
         renderTodos();
     }
 
@@ -180,10 +196,11 @@ todoList.addEventListener('click', (e) => {
         if (newTitle && newTitle.trim() !== '') todo.title = newTitle.trim();
         if (newDesc !== null) todo.description = newDesc.trim();
         if (newDate !== null) todo.dueDate = newDate.trim();
-
+        saveProjects(projects);
         renderTodos();
     }
 });
 
 // ===== Initial Render =====
 renderProjects();
+renderTodos();
