@@ -24,6 +24,10 @@ if(Object.keys(projects).length===0){
 }
 export let activeProject =Object.keys(projects)[0] || "Default Project";
 
+export function setActiveProject(name) {
+    activeProject=name;
+}
+
 // ===== Show/Hide Forms =====
 function showProjectForm() { projectForm.classList.remove('hidden'); }
 function hideProjectForm() { projectForm.classList.add('hidden'); }

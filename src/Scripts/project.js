@@ -1,5 +1,5 @@
 import { saveProjects, loadProjects } from "./storage.js";
-import { projects, activeProject } from "./index.js";
+import { projects, setActiveProject } from "./index.js";
 import { renderProjects } from "./Dom.js";
 
 // ===== Add Project =====
@@ -9,7 +9,7 @@ export function addProjectToList() {
     if (projects[projectNameValue]) { alert('Project already exists.'); return; }
 
     projects[projectNameValue] = [];
-    activeProject = projectNameValue;
+    setActiveProject(projectNameValue);
     saveProjects(projects);
     renderProjects();
     document.querySelector('#project-name').value = '';
