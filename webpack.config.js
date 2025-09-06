@@ -1,21 +1,10 @@
-// const path = require('path');
-
-// module.exports = {
-//   entry: './src/Scripts/index.js',  // your actual JS file
-//   output: {
-//     filename: 'bundle.js',
-//     path: path.resolve(__dirname, 'dist'),  // output folder
-//   },
-//   mode: 'production',
-// };
-
 const path = require("path"); //importin the "path" library for assigning path of locations with node
 const HtmlWebpackPlugin = require("html-webpack-plugin"); //importing for bundling and serving the creatiion of index.html in dist
 const MiniCssExtractPlugin = require("mini-css-extract-plugin"); //for serving creation of style.css
 
 module.exports = {
 
-    mode: "development",
+    mode: "production",
 
     entry: {
         bundle: path.resolve(__dirname, "src/Scripts/index.js")
@@ -50,7 +39,7 @@ module.exports = {
             {
                 test: /\.css$/,
                 use: [
-                    "style-loader", 
+                    MiniCssExtractPlugin.loader, 
                     "css-loader"
                 ],
             },
