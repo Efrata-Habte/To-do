@@ -1,3 +1,4 @@
+import '../Style/style.css'
 import { saveProjects,loadProjects } from "./storage.js";  
 import { renderProjects, renderTodos } from "./Dom.js";
 import { addProjectToList } from "./project.js";
